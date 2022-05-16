@@ -28,7 +28,7 @@ function CategoryInput() {
 
     return (
         <form onSubmit={handleSubmit(onValid)} >
-            <input  {...register("category", { required: "Please Write category" })} placeholder="Write to do" />
+            <input  {...register("category", { required: "Please Write category" })} placeholder="Write to category" />
             <button >Add </button>
         </form>
     );
