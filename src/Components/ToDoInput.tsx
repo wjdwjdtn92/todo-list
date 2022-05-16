@@ -14,7 +14,6 @@ function TodoInput() {
     const { register, handleSubmit, setValue} = useForm<IForm>();
 
     const onValid = ({ toDo }: IForm) => {
-        console.log(toDo);
         setToDos(toDos => [...toDos, { text: toDo, id: Date.now(), category: category }])
         setValue("toDo", "");
     };

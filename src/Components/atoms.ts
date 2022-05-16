@@ -8,9 +8,13 @@ export enum Categories {
     "DONE" = "DONE",
 }
 
+export interface ICategory {
+    text: string;
+}
+
 export interface ITodo {
     text: string;
-    id: number,
+    id: number;
     category: Categories;
 }
 
@@ -58,4 +62,35 @@ export const toDoSelector = selector({
             toDos.filter((toDo) => toDo.category === category),
         ]
     }
+});
+
+
+export const customCategoriesState = atom<ICategory[]>({
+    key: "customCategories",
+    default: [{text : Categories.TO_DO}, {text : Categories.DOING}, {text : Categories.DONE}],
+    effects: [
+        ({ setSelf, onSet, trigger }) => {
+            const key = "customCategories"
+            // If there's a persisted value - set it on load
+            const loadPersisted = async () => {
+                const savedValue = await localForage.getItem(key);
+                
+                if (savedValue != null ) {
+                    setSelf(JSON.parse(savedValue as any));
+                }
+            };
+
+            // Asynchronously set the persisted data
+            if (trigger === 'get') {
+                loadPersisted();
+            }
+
+            // Subscribe to state changes and persist them to localForage
+            onSet((newValue, _, isReset) => {
+                isReset
+                    ? localForage.removeItem(key)
+                    : localForage.setItem(key, JSON.stringify(newValue));
+            });
+        }
+    ]
 });
