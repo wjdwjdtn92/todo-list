@@ -2,7 +2,7 @@ import { useRecoilState, useRecoilValue, } from "recoil";
 import { categoryState, customCategoriesState } from "./atoms";
 
 
-function CatagorySelect() {
+function CategorySelect() {
     const customCategories = useRecoilValue(customCategoriesState);
     const [category, setCategory] = useRecoilState(categoryState);
 
@@ -19,4 +19,4 @@ function CatagorySelect() {
 }
 
 
-export default CatagorySelect;
+export default CategorySelect;

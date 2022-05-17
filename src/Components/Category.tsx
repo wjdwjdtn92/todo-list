@@ -7,8 +7,6 @@ function Category({ text }: ICategory) {
     const toDos = useRecoilValue(toDoState);
     const [error, setError] = useState("");
 
-    console.log(text);
-
     const onRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
         const { currentTarget: { name }, } = event;
         setCategories((categories) => {

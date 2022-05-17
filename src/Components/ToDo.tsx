@@ -5,8 +5,6 @@ function ToDo({ id, category, text }: ITodo) {
     const setToDos = useSetRecoilState(toDoState);
     const customCategories = useRecoilValue(customCategoriesState);
 
-    console.log(id);
-
     const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         const { currentTarget: { name }, } = event;
     
@@ -18,7 +16,6 @@ function ToDo({ id, category, text }: ITodo) {
             return newToDos;
         });
     }
-
     const onRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
         setToDos((toDos) => {
             const newToDos = [...toDos];
