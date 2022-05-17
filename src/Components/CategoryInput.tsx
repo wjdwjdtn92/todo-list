@@ -11,16 +11,17 @@ interface IForm {
 function CategoryInput() {
     const setCustomCategories = useSetRecoilState(customCategoriesState);
     // const category = useRecoilValue(categoryState);
-    const { register, handleSubmit, setValue } = useForm<IForm>();
+    const { register, handleSubmit, setValue, setError , formState: { errors }  } = useForm<IForm>();
 
     const onValid = ({ category }: IForm) => {
         setCustomCategories(customCategories => {
             console.log(customCategories);
+            const isDuplicate = customCategories.some(value => value.text === category)
 
-            return customCategories
-                .some(value =>
-                    value.text === category
-                ) ? [...customCategories] :  [...customCategories, { text: category }];
+            if (isDuplicate) {
+                setError("category", { message: "Duplicate category" });
+            }
+            return isDuplicate ? [...customCategories] : [...customCategories, { text: category }];
         });
 
         setValue("category", "");
@@ -30,6 +31,8 @@ function CategoryInput() {
         <form onSubmit={handleSubmit(onValid)} >
             <input  {...register("category", { required: "Please Write category" })} placeholder="Write to category" />
             <button >Add </button>
+            <span  style={{ color: 'red'}}>{errors?.category?.message}</span>
+            
         </form>
     );
 }
